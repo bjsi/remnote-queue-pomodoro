@@ -32,7 +32,7 @@ export function TomatoIcon(props: TomatoIconProps) {
           className="absolute text-center"
           style={{
             left: 26.5,
-            bottom: 11,
+            bottom: 10,
           }}
         >
           <span className={clsx('text-[11px]', props.state?.type === 'break' && 'text-green-50')}>

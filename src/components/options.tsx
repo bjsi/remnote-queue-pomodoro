@@ -27,6 +27,9 @@ function OptionItem(props: {
 export function Options() {
   const plugin = usePlugin();
   const [state] = useLocalStorageState<PomodoroState | undefined>(pomodoroStateKey, undefined);
+  const closePopup = () => {
+    plugin.widget.closePopup(true);
+  };
 
   return (
     <div className="border border-solid rounded-lg shadow-md rn-clr-background-primary rn-clr-border-opaque">
@@ -38,6 +41,7 @@ export function Options() {
           } else if (state?.state === 'stopped') {
             playPomodoro(plugin);
           }
+          closePopup();
         }}
       >
         {state?.state === 'ticking' ? 'Pause' : 'Start'}
@@ -49,6 +53,7 @@ export function Options() {
           } else if (state?.type === 'break') {
             startLongPomodoro(plugin);
           }
+          closePopup();
         }}
       >
         {state?.type === 'long' ? 'Break' : 'Skip Break'}
@@ -56,6 +61,7 @@ export function Options() {
       <OptionItem
         onClick={() => {
           restartPomodoro(plugin);
+          closePopup();
         }}
         className="rounded-b-lg"
       >

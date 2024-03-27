@@ -68,7 +68,11 @@ async function onActivate(plugin: ReactRNPlugin) {
     updatePomodoroState(plugin, undefined);
   });
 
-  await plugin.app.registerWidget('options', WidgetLocation.FloatingWidget, {
+  await plugin.app.registerWidget('optionsFloatingWidget', WidgetLocation.FloatingWidget, {
+    dimensions: { height: 'auto', width: '100%' },
+  });
+
+  await plugin.app.registerWidget('optionsPopup', WidgetLocation.Popup, {
     dimensions: { height: 'auto', width: '100%' },
   });
 

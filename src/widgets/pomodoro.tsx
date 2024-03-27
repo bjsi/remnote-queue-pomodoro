@@ -1,16 +1,24 @@
-import { usePlugin, renderWidget, RNPlugin, useLocalStorageState } from '@remnote/plugin-sdk';
+import {
+  usePlugin,
+  renderWidget,
+  RNPlugin,
+  useLocalStorageState,
+  useRunAsync,
+} from '@remnote/plugin-sdk';
 import { pomodoroPlayAlarmKey, pomodoroStateKey, tomatoHeight } from '../lib/consts';
 import React, { useRef } from 'react';
 import { TomatoIcon } from '../components/tomato';
 import { PomodoroState, startBreak, startLongPomodoro } from '../lib/state';
 import { savePomodoro } from '../lib/savePomodoro';
+import clsx from 'clsx';
 
 async function openOptionsMenu(plugin: RNPlugin) {
   const os = await plugin.app.getOperatingSystem();
   if (os === 'android' || os === 'ios') {
+    await plugin.widget.openPopup('optionsPopup', undefined, true);
   } else {
     await plugin.window.openFloatingWidget(
-      'options',
+      'optionsFloatingWidget',
       { top: tomatoHeight + 5, left: 0 },
       'rn-queue__widget-toolbar div[data-plugin-id="remnote-queue-pomodoro"]'
     );
@@ -41,7 +49,7 @@ export const Pomodoro = () => {
       if (state?.state === 'ticking') {
         setState({ ...state, minutesLeft: state?.minutesLeft - 1 });
       }
-    }, 1000 * 10);
+    }, 1000 * 60);
     return () => clearInterval(ivl);
   }, [state]);
 
@@ -60,12 +68,17 @@ export const Pomodoro = () => {
     }
   }, [state?.minutesLeft]);
 
+  const os = useRunAsync(async () => await plugin.app.getOperatingSystem(), []);
+
   return (
     <div
       onClick={() => {
         openOptionsMenu(plugin);
       }}
-      className="flex items-center justify-end select-none"
+      className={clsx(
+        'flex items-center justify-end select-none',
+        os === 'ios' || os === 'android' ? 'justify-center' : 'justify-end'
+      )}
       style={{
         height: tomatoHeight,
       }}
