@@ -1,4 +1,4 @@
-## RemNote Flashcard Queue Pomodoro Timer Plugin
+## RemNote Flashcard Pomodoro Timer Plugin
 
 ### Features
 
@@ -9,9 +9,10 @@
 - The timer automatically starts when you open the queue.
 - The current time will display in the top right of the queue.
 - Click on the tomato icon to show options.
+- Your completed Pomodoros are automatically saved and linked to today's daily doc.
 
 ### Settings
 
 - Long time (mins)
-- Medium time (mins)
 - Break time (mins)
+- Play Alarm (true/false)
