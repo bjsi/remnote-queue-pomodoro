@@ -1,22 +1,22 @@
 {
   "manifestVersion": 1,
-  "id": "plugin_template",
-  "name": "Plugin Template",
-  "author": "remnote",
-  "repoUrl": "",
+  "id": "remnote-queue-pomodoro",
+  "name": "Queue Pomodoro Timer",
+  "author": "Jamesb",
+  "repoUrl": "https://github.com/bjsi/remnote-queue-pomodoro",
   "version": {
     "major": 0,
     "minor": 0,
     "patch": 1
   },
   "theme": [],
-  "enableOnMobile": false,
-  "description": "",
-  "requestNative": false,
+  "enableOnMobile": true,
+  "description": "A pomodoro timer for the flashcard queue",
+  "requestNative": true,
   "requiredScopes": [
     {
       "type": "All",
-      "level": "Read"
+      "level": "ReadCreateModify"
     }
   ]
 }
