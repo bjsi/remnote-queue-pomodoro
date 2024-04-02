@@ -35,7 +35,12 @@ export function TomatoIcon(props: TomatoIconProps) {
             bottom: 10,
           }}
         >
-          <span className={clsx('text-[11px]', props.state?.type === 'break' && 'text-green-50')}>
+          <span
+            className={clsx(
+              'text-[11px] text-black',
+              props.state?.type === 'break' && 'text-green-50'
+            )}
+          >
             {minutes}
           </span>
         </div>
