@@ -11,6 +11,7 @@ import { TomatoIcon } from '../components/tomato';
 import { PomodoroState, startBreak, startLongPomodoro } from '../lib/state';
 import { savePomodoro } from '../lib/savePomodoro';
 import clsx from 'clsx';
+import { openAlertPopup } from '../lib/openAlertPopup';
 
 async function openOptionsMenu(plugin: RNPlugin) {
   const os = await plugin.app.getOperatingSystem();
@@ -55,15 +56,16 @@ export const Pomodoro = () => {
 
   React.useEffect(() => {
     if (state?.minutesLeft === 0) {
+      playAlarm();
       if (state.type === 'long') {
-        playAlarm();
+        openAlertPopup(plugin, 'pomodoro');
         savePomodoro({ plugin, ...state });
+        startBreak(plugin);
       }
       // begin next
-      if (state?.type === 'break') {
+      else if (state?.type === 'break') {
+        openAlertPopup(plugin, 'break');
         startLongPomodoro(plugin);
-      } else if (state?.type === 'long') {
-        startBreak(plugin);
       }
     }
   }, [state?.minutesLeft]);

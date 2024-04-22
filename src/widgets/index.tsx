@@ -21,7 +21,7 @@ async function onActivate(plugin: ReactRNPlugin) {
   await plugin.settings.registerBooleanSetting({
     id: pomodoroPlayAlarmKey,
     title: 'Play Alarm Sound',
-    defaultValue: true,
+    defaultValue: false,
   });
 
   await plugin.settings.registerNumberSetting({
@@ -74,6 +74,14 @@ async function onActivate(plugin: ReactRNPlugin) {
 
   await plugin.app.registerWidget('optionsPopup', WidgetLocation.Popup, {
     dimensions: { height: 'auto', width: '100%' },
+  });
+
+  await plugin.app.registerWidget('pomodoroFinishedPopup', WidgetLocation.FloatingWidget, {
+    dimensions: { height: 'auto', width: 300 },
+  });
+
+  await plugin.app.registerWidget('breakFinishedPopup', WidgetLocation.FloatingWidget, {
+    dimensions: { height: 'auto', width: 300 },
   });
 
   const os = await plugin.app.getOperatingSystem();
