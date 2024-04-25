@@ -45,17 +45,24 @@ export const Pomodoro = () => {
     startLongPomodoro(plugin);
   }, []);
 
+  const intervalRef = React.useRef<number | undefined>();
   React.useEffect(() => {
-    const ivl = setInterval(() => {
-      if (state?.state === 'ticking') {
-        setState({ ...state, minutesLeft: state?.minutesLeft - 1 });
+    if (state?.state === 'ticking') {
+      // @ts-ignore
+      intervalRef.current = setInterval(() => {
+        setState({ ...state, minutesLeft: state.minutesLeft - 1 });
+      }, 1000 * 60);
+    }
+
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
       }
-    }, 1000 * 60);
-    return () => clearInterval(ivl);
+    };
   }, [state]);
 
   React.useEffect(() => {
-    if (state?.minutesLeft === 0) {
+    if (state?.minutesLeft != null && state.minutesLeft <= 0) {
       playAlarm();
       if (state.type === 'long') {
         openAlertPopup(plugin, 'pomodoro');
