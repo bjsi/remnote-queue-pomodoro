@@ -45,9 +45,20 @@ export const Pomodoro = () => {
     startLongPomodoro(plugin);
   }, []);
 
+  const [tabVisible, setTabVisible] = React.useState(true);
+  React.useEffect(() => {
+    const handleVisibilityChange = () => {
+      setTabVisible(!document.hidden);
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, []);
+
   const intervalRef = React.useRef<number | undefined>();
   React.useEffect(() => {
-    if (state?.state === 'ticking') {
+    if (state?.state === 'ticking' && tabVisible) {
       // @ts-ignore
       intervalRef.current = setInterval(() => {
         setState({ ...state, minutesLeft: state.minutesLeft - 1 });
@@ -59,7 +70,7 @@ export const Pomodoro = () => {
         clearInterval(intervalRef.current);
       }
     };
-  }, [state]);
+  }, [state, tabVisible]);
 
   React.useEffect(() => {
     if (state?.minutesLeft != null && state.minutesLeft <= 0) {
